@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Carnet;
 use AppBundle\Form\CarnetType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -27,9 +29,7 @@ class CarnetController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $carnets = $em->getRepository('AppBundle:Carnet')->findAll();
+        $carnets = $this->getUser()->getCarnet();
 
         return $this->render('AppBundle:carnet:index.html.twig', array(
             'carnets' => $carnets,
@@ -73,7 +73,7 @@ class CarnetController extends Controller
     public function showAction(Carnet $carnet)
     {
         if($carnet->getUser()->getUsername() != $this->getUser()->getUsername())
-            return $this->createAccessDeniedException('vous ne pouvez pas accéder à cette page');
+            throw new AccessDeniedException('vous ne pouvez pas accéder à cette page');
 
         $deleteForm = $this->createDeleteForm($carnet);
 
@@ -91,6 +91,9 @@ class CarnetController extends Controller
      */
     public function editAction(Request $request, Carnet $carnet)
     {
+        if($carnet->getUser()->getUsername() != $this->getUser()->getUsername())
+            throw new AccessDeniedException('vous ne pouvez pas accéder à cette page');
+
         $deleteForm = $this->createDeleteForm($carnet);
         $editForm = $this->createForm('AppBundle\Form\CarnetType', $carnet);
         $editForm->handleRequest($request);
@@ -119,6 +122,9 @@ class CarnetController extends Controller
      */
     public function deleteAction(Request $request, Carnet $carnet)
     {
+        if($carnet->getUser()->getUsername() != $this->getUser()->getUsername())
+            throw new AccessDeniedException('vous ne pouvez pas accéder à cette page');
+
         $form = $this->createDeleteForm($carnet);
         $form->handleRequest($request);
 
