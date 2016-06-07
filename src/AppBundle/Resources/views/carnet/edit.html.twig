@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Edition du contact</h3></div>
+        <div class="panel-body ">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <input type="submit" value="Valider les modifications" class="btn btn-primary btn-block"/>
+                {{ form_end(edit_form) }}
+                <br>
+                <a href="{{ path('_index') }}" class="btn btn-default btn-block">Retour à la liste des contacts</a>
+                <br>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Supprimer le contact" class="btn btn-danger btn-block">
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

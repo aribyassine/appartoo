@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Carnet</h3></div>
+        <div class="panel-body">
+            <div class="col-md-8 col-md-offset-2">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <td>{{ carnet.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ carnet.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prénom</th>
+                        <td>{{ carnet.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>E-mail</th>
+                        <td>{{ carnet.mail }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ carnet.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Téléphone</th>
+                        <td>{{ carnet.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Site web</th>
+                        <td>{{ carnet.site }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                {{ form_start(delete_form) }}
+                    <a href="{{ path('_index') }}" class="btn btn-default">Retour à la liste</a>
+                    <a href="{{ path('_edit', { 'id': carnet.id }) }}" class="btn btn-success">Editer</a>
+                    <input type="submit" value="Supprimer" class="btn btn-danger">
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
